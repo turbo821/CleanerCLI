@@ -48,7 +48,7 @@
     <Compile Include="Branch.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="CommonClient.cs" />
-    <Compile Include="DisabledPerson.cs" />
+    <Compile Include="InvalidPerson.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -57,7 +57,7 @@
     <Compile Include="ServiceType.cs" />
     <Compile Include="TypeService.cs" />
     <Compile Include="VipClient.cs" />
-    <Compile Include="Сlothing.cs" />
+    <Compile Include="Clothing.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

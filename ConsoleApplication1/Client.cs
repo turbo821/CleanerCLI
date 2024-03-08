@@ -15,9 +15,9 @@ namespace ConsoleApplication1
 
         public Client(string firstName, string lastName, string secondName) 
         {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.secondName = secondName;
+            FirstName = firstName;
+            LastName = lastName;
+            SecondName = secondName;
         }
         public string FirstName
         {

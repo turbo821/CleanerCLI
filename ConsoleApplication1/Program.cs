@@ -11,10 +11,10 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            Client client = new VipClient("ds", "sda", "dsa");
-            client.FirstName = "Tom";
-            client.LastName = "Fiill";
-            client.DisplayInfo();
+            Allowance allowance = new Allowance("very premium", 5, 5);
+            allowance.DisplayInfo();
+            Clothing dress = new Clothing("dress", 2, 3);
+            dress.DisplayInfo();
             Console.ReadKey();
         }
 

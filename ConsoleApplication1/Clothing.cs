@@ -8,23 +8,18 @@ namespace ConsoleApplication1
 {
     public class Clothing
     {
-        private string title;
         private int size;
         private int pollutionLevel;
-        private QualityAndSpeed qualityAndSpeed = new QualityAndSpeed();
+        public string Title {  get; set; }
+        public QualityAndSpeed QualityAndSpeed { get; } = new QualityAndSpeed();
 
         public Clothing(string title, int size, int pollutionLevel)
         {
-            this.title = title;
-            this.size = size;
-            this.pollutionLevel = pollutionLevel;
-            SetQualityAndSpeed();
+            Title = title;
+            Size = size;
+            PollutionLevel = pollutionLevel;
         }
-        public string Title
-        {
-            get { return title; }
-            set { title = value; }
-        }
+
         public int Size
         {
             get { return size; }
@@ -53,29 +48,34 @@ namespace ConsoleApplication1
                 SetQualityAndSpeed();
             }
         }
+
         private void SetQualityAndSpeed()
         {
             if (size == 1)
-            { this.qualityAndSpeed.SpeedFactor = 1.4; }
+            { QualityAndSpeed.SpeedFactor = 1.4; }
             else if (size == 2) 
-            { this.qualityAndSpeed.SpeedFactor = 1.2; }
+            { QualityAndSpeed.SpeedFactor = 1.2; }
             else if (size == 3)
-            { this.qualityAndSpeed.SpeedFactor = 1; }
+            { QualityAndSpeed.SpeedFactor = 1; }
             else if (size == 4)
-            { this.qualityAndSpeed.SpeedFactor = 0.8; }
+            { QualityAndSpeed.SpeedFactor = 0.8; }
             else if (size == 5)
-            { this.qualityAndSpeed.SpeedFactor = 1.6; }
+            { QualityAndSpeed.SpeedFactor = 0.6; }
 
             if (pollutionLevel == 1)
-            { this.qualityAndSpeed.QualityList = new List<int>() { 0, 0, 5, 10, 15 }; }
+            { QualityAndSpeed.QualityList = new List<int>() { 0, 0, 5, 10, 15 }; }
             else if (pollutionLevel == 2)
-            { this.qualityAndSpeed.QualityList = new List<int>() { 0, 0, 7, 15, 7 }; }
+            { QualityAndSpeed.QualityList = new List<int>() { 0, 0, 7, 15, 7 }; }
             else if (pollutionLevel == 3)
-            { this.qualityAndSpeed.QualityList = new List<int>() { 2, 5, 15, 5, 2 }; }
+            { QualityAndSpeed.QualityList = new List<int>() { 2, 5, 15, 5, 2 }; }
             else if (pollutionLevel == 4)
-            { this.qualityAndSpeed.QualityList = new List<int>() { 7, 15, 5, 2, 0 }; }
+            { QualityAndSpeed.QualityList = new List<int>() { 7, 15, 5, 2, 0 }; }
             else if (pollutionLevel == 5)
-            { this.qualityAndSpeed.QualityList = new List<int>() { 15, 10, 5, 0, 0 }; }
+            { QualityAndSpeed.QualityList = new List<int>() { 15, 10, 5, 0, 0 }; }
+        }
+        public void DisplayInfo()
+        {
+            Console.WriteLine($"Clothing - {Title}, size - {Size}, pollution - {PollutionLevel}");
         }
     }
 }
