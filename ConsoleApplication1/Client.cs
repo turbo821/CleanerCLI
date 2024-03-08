@@ -42,7 +42,7 @@ namespace ConsoleApplication1
         }
 
 
-        public void DisplayInfo()
+        public virtual void DisplayInfo()
         {
             if (signConstancy)
             {

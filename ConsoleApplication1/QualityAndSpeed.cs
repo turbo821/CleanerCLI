@@ -11,6 +11,7 @@ namespace ConsoleApplication1
         private List<int> qualityList;
         private double speedFactor;
 
+        public QualityAndSpeed() { }
         public QualityAndSpeed(List<int> qualityList, double speedFactor)
         {
             this.qualityList = new List<int>(qualityList);
