@@ -12,12 +12,24 @@ namespace ConsoleApplication1
         private string lastName;
         private string secondName;
         private bool signConstancy = false;
+        private Card card;
 
-        public Client(string firstName, string lastName, string secondName) 
+        public Client(string firstName, string lastName)
         {
             FirstName = firstName;
             LastName = lastName;
+        }
+        public Client(string firstName, string lastName, Card card) : this(firstName, lastName)
+        {
+            Card = card;
+        }
+        public Client(string firstName, string lastName, string secondName) : this(firstName, lastName)
+        {
             SecondName = secondName;
+        }
+        public Client(string firstName, string lastName, string secondName, Card card) : this(firstName, lastName, secondName)
+        {
+            Card = card;
         }
         public string FirstName
         {
@@ -35,22 +47,25 @@ namespace ConsoleApplication1
             get { return secondName; }
             set { secondName = value; }
         }
-
+        public Card Card 
+        { 
+            get { return card; } 
+            set { card = value; } 
+        }
         public bool SignConstancy
         {
             get { return signConstancy; }
         }
 
-
-        public virtual void DisplayInfo()
+        public override string ToString()
         {
             if (signConstancy)
             {
-                Console.WriteLine($"{FirstName} {LastName} - постоянный");
+                return $"{FirstName} {secondName} {LastName} - constansy";
             }
             else
             {
-                Console.WriteLine($"{FirstName} {LastName} - непостоянный");
+                return $"{FirstName} {secondName} {LastName} - not constansy";
             }
             
         }

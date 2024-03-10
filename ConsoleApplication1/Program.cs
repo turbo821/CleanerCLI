@@ -11,12 +11,12 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            Allowance allowance = new Allowance(5, 5);
-            Console.WriteLine(allowance.Quality);
-            Console.WriteLine(allowance.Speed);
-            Console.WriteLine(allowance.Title);
             Clothing dress = new Clothing("dress", 2, 3);
-            Console.WriteLine(dress);
+            Allowance allowance = new Allowance(5, 5);
+            Client client = new CommonClient("Tom", "Smith");
+            Card card = new Card("92831924", 113321);
+            client.Card = card;
+            Console.WriteLine(client);
             Console.ReadKey();
         }
 

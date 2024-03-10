@@ -96,9 +96,7 @@ namespace ConsoleApplication1
             Console.WriteLine("Speed:\n\t5 -> very fast\n\t4 -> fast\n\t3 -> normal\n\t2 -> slowly\n\t1 -> very slowly");
         }
         private void SetTitle()
-
         {
-            
             string q = " quality and ";
             string s = " speed washing ";
             if (quality == 1)
@@ -123,6 +121,5 @@ namespace ConsoleApplication1
             else if (speed == 5)
             { title = title + "very fast" + s; }
         }
-
     }
 }
