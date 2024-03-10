@@ -56,7 +56,6 @@
     <Compile Include="QualityAndSpeed.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="ServiceType.cs" />
-    <Compile Include="TypeService.cs" />
     <Compile Include="VipClient.cs" />
     <Compile Include="Clothing.cs" />
   </ItemGroup>

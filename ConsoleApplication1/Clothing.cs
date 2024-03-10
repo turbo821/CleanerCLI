@@ -25,11 +25,11 @@ namespace ConsoleApplication1
             get { return size; }
             set
             {
-                if (size > 0 && size < 6)
+                if (value > 0 && value < 6)
                 { size = value; }
-                else if (size < 0)
+                else if (value < 0)
                 { size = 1; }
-                else
+                else if(value > 5) 
                 { size = 5; }
                 SetQualityAndSpeed();
             }
@@ -39,11 +39,11 @@ namespace ConsoleApplication1
             get { return pollutionLevel; } 
             set
             {
-                if (pollutionLevel > 0 && pollutionLevel < 6)
+                if (value > 0 && value < 6)
                 { pollutionLevel = value; }
-                else if (pollutionLevel < 0)
+                else if (value < 0)
                 { pollutionLevel = 1; }
-                else
+                else if (value > 5)
                 { pollutionLevel = 5; }
                 SetQualityAndSpeed();
             }
@@ -75,7 +75,7 @@ namespace ConsoleApplication1
         }
         public override string ToString()
         {
-            return $"Clothing - {Title}, size - {Size}, pollution - {PollutionLevel}";
+            return $"{Title}, size - {Size}, pollution - {PollutionLevel}";
         }
     }
 }

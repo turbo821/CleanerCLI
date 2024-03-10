@@ -61,11 +61,11 @@ namespace ConsoleApplication1
         {
             if (signConstancy)
             {
-                return $"{FirstName} {secondName} {LastName} - constansy";
+                return $"{FirstName} {secondName} {LastName} (constansy client)";
             }
             else
             {
-                return $"{FirstName} {secondName} {LastName} - not constansy";
+                return $"{FirstName} {secondName} {LastName} (not constansy client)";
             }
             
         }

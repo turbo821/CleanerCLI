@@ -15,10 +15,10 @@ namespace ConsoleApplication1
         private double priceFactor;
         public QualityAndSpeed QualityAndSpeed { get; } = new QualityAndSpeed();
 
-        public Allowance(int complexity, int velocity)
+        public Allowance(int quality, int speed)
         {
-            Quality = complexity;
-            Speed = velocity;
+            Quality = quality;
+            Speed = speed;
             SetTitle();
         }
 
@@ -53,7 +53,32 @@ namespace ConsoleApplication1
         {
             get { return priceFactor; }
         }
+        private void SetTitle()
+        {
+            string q = " quality and ";
+            string s = " speed washing";
+            if (quality == 1)
+            { title = "economy(E)" + q; }
+            else if (quality == 2)
+            { title = "satisfactorily(D)" + q; }
+            else if (quality == 3)
+            { title = "normal(C)" + q; }
+            else if (quality == 4)
+            { title = "good(B)" + q; }
+            else if (quality == 5)
+            { title = "great(A)" + q; }
 
+            if (speed == 1)
+            { title = title + "very slowly" + s; }
+            else if (speed == 2)
+            { title = title + "slowly" + s; }
+            else if (speed == 3)
+            { title = title + "normal" + s; }
+            else if (speed == 4)
+            { title = title + "fast" + s; }
+            else if (speed == 5)
+            { title = title + "very fast" + s; }
+        }
         private void SetQualityAndSpeed()
         {
             if (quality == 1)
@@ -80,46 +105,20 @@ namespace ConsoleApplication1
         }
         private void SetPrice()
         {
-            priceFactor = 1 + 0.20 * quality + 0.18 * speed;
+            priceFactor = 1 + 0.20 * (quality - 1) + 0.18 * (speed - 1);
 
         }
         public override string ToString()
         {
-            return $"Allowance - {Title}, Speed - {speed}, quality - {quality}, priceFactor - {priceFactor}";
+            return $"{Title}, default price will increase {priceFactor} times";
         }
-        public void DescriptionQuality()
+        public static void DescriptionQuality()
         {
             Console.WriteLine("Quality:\n\t5 -> great(A)\n\t4 -> good(B)\n\t3 -> normal(C)\n\t2 -> satisfactorily(D)\n\t1 -> economy(E)");
         }
-        public void DescriptionSpeed()
+        public static void DescriptionSpeed()
         {
             Console.WriteLine("Speed:\n\t5 -> very fast\n\t4 -> fast\n\t3 -> normal\n\t2 -> slowly\n\t1 -> very slowly");
-        }
-        private void SetTitle()
-        {
-            string q = " quality and ";
-            string s = " speed washing ";
-            if (quality == 1)
-            { title = "economy(E)" + q; }
-            else if (quality == 2)
-            { title = "satisfactorily(D)" + q; }
-            else if (quality == 3)
-            { title = "normal(C)" + q; }
-            else if (quality == 4)
-            { title = "good(B)" + q; }
-            else if (quality == 5)
-            { title = "great(A)" + q; }
-
-            if (speed == 1)
-            { title = title + "very slowly" + s; }
-            else if (speed == 2)
-            { title = title + "slowly" + s; }
-            else if (speed == 3)
-            { title = title + "normal" + s; }
-            else if (speed == 4)
-            { title = title + "fast" + s; }
-            else if (speed == 5)
-            { title = title + "very fast" + s; }
         }
     }
 }
