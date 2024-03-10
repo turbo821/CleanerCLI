@@ -1,49 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security.Policy;
 using System.Text;
 
 namespace ConsoleApplication1
 {
     public class Allowance
-    { 
-        private int complexity;
-        private int velocity;
-        public string Title { get; set; }
-        public double priceFactor;
+    {
+        private string title;
+        private int quality;
+        private int speed;
+        private double priceFactor;
         public QualityAndSpeed QualityAndSpeed { get; } = new QualityAndSpeed();
 
-        public Allowance(string title, int complexity, int velocity)
+        public Allowance(int complexity, int velocity)
         {
-            Title = title;
-            Complexity = complexity;
-            Velocity = velocity;
+            Quality = complexity;
+            Speed = velocity;
+            SetTitle();
         }
 
-        public int Complexity
+        public string Title { get { return title; } }
+        public int Quality
         {
-            get { return complexity; }
+            get { return quality; }
             set { 
-                if (complexity > 0 && complexity < 6)
-                { complexity = value; }
-                else if (complexity < 0)
-                { complexity = 1; }
-                else
-                { complexity = 5; }
+                if (value > 0 && value < 6)
+                { quality = value; }
+                else if (value < 0)
+                { value = 1; }
+                else if (value > 5)
+                { quality = 5; }
                 SetQualityAndSpeed(); SetPrice();
             }
         }
-        public int Velocity
+        public int Speed
         {
-            get { return velocity; }
+            get { return speed; }
             set {
-                if (velocity > 0 && velocity < 6)
-                { velocity = value; }
-                else if (velocity < 0)
-                { velocity = 1; }
-                else
-                { velocity = 5; }
+                if (value > 0 && value < 6)
+                { speed = value; }
+                else if (value < 0)
+                { value = 1; }
+                else if (value > 5)
+                { speed = 5; }
                 SetQualityAndSpeed(); SetPrice();
             }
         }
@@ -54,36 +56,73 @@ namespace ConsoleApplication1
 
         private void SetQualityAndSpeed()
         {
-            if (velocity == 1)
-            { QualityAndSpeed.SpeedFactor = 0.6; }
-            else if (velocity == 2)
-            { QualityAndSpeed.SpeedFactor = 0.8; }
-            else if (velocity == 3)
-            { QualityAndSpeed.SpeedFactor = 1; }
-            else if (velocity == 4)
-            { QualityAndSpeed.SpeedFactor = 1.2; }
-            else if (velocity == 5)
-            { QualityAndSpeed.SpeedFactor = 1.4; }
-
-            if (complexity == 1)
+            if (quality == 1)
             { QualityAndSpeed.QualityList = new List<int>() { 25, 15, 5, 0, 0 }; }
-            else if (complexity == 2)
+            else if (quality == 2)
             { QualityAndSpeed.QualityList = new List<int>() { 15, 20, 10, 0, 0 }; }
-            else if (complexity == 3)
+            else if (quality == 3)
             { QualityAndSpeed.QualityList = new List<int>() { 0, 13, 20, 13, 0 }; }
-            else if (complexity == 4)
+            else if (quality == 4)
             { QualityAndSpeed.QualityList = new List<int>() { 0, 0, 5, 20, 15 }; }
-            else if (complexity == 5)
+            else if (quality == 5)
             { QualityAndSpeed.QualityList = new List<int>() { 0, 0, 5, 15, 25 }; }
+
+            if (speed == 1)
+            { QualityAndSpeed.SpeedFactor = 0.6; }
+            else if (speed == 2)
+            { QualityAndSpeed.SpeedFactor = 0.8; }
+            else if (speed == 3)
+            { QualityAndSpeed.SpeedFactor = 1; }
+            else if (speed == 4)
+            { QualityAndSpeed.SpeedFactor = 1.2; }
+            else if (speed == 5)
+            { QualityAndSpeed.SpeedFactor = 1.4; }
         }
         private void SetPrice()
         {
-            priceFactor = 1 + 0.20 * complexity + 0.18 * velocity;
+            priceFactor = 1 + 0.20 * quality + 0.18 * speed;
 
         }
-        public void DisplayInfo()
+        public override string ToString()
         {
-            Console.WriteLine($"Allowance - {Title}, Velocity - {velocity}, complexity - {complexity}, priceFactor - {priceFactor}");
+            return $"Allowance - {Title}, Speed - {speed}, quality - {quality}, priceFactor - {priceFactor}";
         }
+        public void DescriptionQuality()
+        {
+            Console.WriteLine("Quality:\n\t5 -> great(A)\n\t4 -> good(B)\n\t3 -> normal(C)\n\t2 -> satisfactorily(D)\n\t1 -> economy(E)");
+        }
+        public void DescriptionSpeed()
+        {
+            Console.WriteLine("Speed:\n\t5 -> very fast\n\t4 -> fast\n\t3 -> normal\n\t2 -> slowly\n\t1 -> very slowly");
+        }
+        private void SetTitle()
+
+        {
+            
+            string q = " quality and ";
+            string s = " speed washing ";
+            if (quality == 1)
+            { title = "economy(E)" + q; }
+            else if (quality == 2)
+            { title = "satisfactorily(D)" + q; }
+            else if (quality == 3)
+            { title = "normal(C)" + q; }
+            else if (quality == 4)
+            { title = "good(B)" + q; }
+            else if (quality == 5)
+            { title = "great(A)" + q; }
+
+            if (speed == 1)
+            { title = title + "very slowly" + s; }
+            else if (speed == 2)
+            { title = title + "slowly" + s; }
+            else if (speed == 3)
+            { title = title + "normal" + s; }
+            else if (speed == 4)
+            { title = title + "fast" + s; }
+            else if (speed == 5)
+            { title = title + "very fast" + s; }
+        }
+
     }
 }

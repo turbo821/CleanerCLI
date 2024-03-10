@@ -63,19 +63,19 @@ namespace ConsoleApplication1
             { QualityAndSpeed.SpeedFactor = 0.6; }
 
             if (pollutionLevel == 1)
-            { QualityAndSpeed.QualityList = new List<int>() { 0, 0, 5, 10, 15 }; }
+            { QualityAndSpeed.QualityList = new List<int>() { -20, -10, 0, 10, 20 }; }
             else if (pollutionLevel == 2)
-            { QualityAndSpeed.QualityList = new List<int>() { 0, 0, 7, 15, 7 }; }
+            { QualityAndSpeed.QualityList = new List<int>() { -10, 0, 10, 10, 15 }; }
             else if (pollutionLevel == 3)
-            { QualityAndSpeed.QualityList = new List<int>() { 2, 5, 15, 5, 2 }; }
+            { QualityAndSpeed.QualityList = new List<int>() { -7, -5, 17, 5, 2 }; }
             else if (pollutionLevel == 4)
-            { QualityAndSpeed.QualityList = new List<int>() { 7, 15, 5, 2, 0 }; }
+            { QualityAndSpeed.QualityList = new List<int>() { 7, 15, 5, -5, -10 }; }
             else if (pollutionLevel == 5)
-            { QualityAndSpeed.QualityList = new List<int>() { 15, 10, 5, 0, 0 }; }
+            { QualityAndSpeed.QualityList = new List<int>() { 20, 15, 0, -10, -15 }; }
         }
-        public void DisplayInfo()
+        public override string ToString()
         {
-            Console.WriteLine($"Clothing - {Title}, size - {Size}, pollution - {PollutionLevel}");
+            return $"Clothing - {Title}, size - {Size}, pollution - {PollutionLevel}";
         }
     }
 }

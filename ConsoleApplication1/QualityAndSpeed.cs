@@ -56,8 +56,8 @@ namespace ConsoleApplication1
         public static QualityAndSpeed operator +(QualityAndSpeed object1, QualityAndSpeed object2)
         {
             List<int> quList = new List<int>() { object1.qualityList[0]+ object2.qualityList[0], object1.qualityList[1] + object2.qualityList[1],
-            object1.qualityList[2]+ object2.qualityList[2],object1.qualityList[3]+ object2.qualityList[3],
-            object1.qualityList[4]+ object2.qualityList[4],};
+            object1.qualityList[2] + object2.qualityList[2],object1.qualityList[3] + object2.qualityList[3],
+            object1.qualityList[4] + object2.qualityList[4]};
             double spFactor = object1.SpeedFactor + object2.SpeedFactor;
             return new QualityAndSpeed(quList, spFactor);
         }

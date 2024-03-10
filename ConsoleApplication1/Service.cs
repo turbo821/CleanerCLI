@@ -37,7 +37,7 @@ namespace ConsoleApplication1
 
         public void DisplayInfo()
         {
-            Console.WriteLine($"Name: {serviceType.Name} - Complexity: {allowance.Complexity}");
+            Console.WriteLine($"Name: {serviceType.Name} - Complexity: {allowance.Quality}");
         }
     }
 }
