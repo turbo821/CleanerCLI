@@ -23,8 +23,13 @@ namespace ConsoleApplication1
             Clothing costume = new Clothing("Costume", 5, 5, 1120);
             List<List<Clothing>> clothings = new List<List<Clothing>>() { new List<Clothing> { cap, t_shirt, winterCoat }, new List<Clothing>{hat, trousers, costume } };
    
-            Console.WriteLine("\t\t< < < Tender Cleaners > > >");
-            Console.WriteLine("Welcome friend!\n");
+            Console.WriteLine(@"  _______             _              _____ _                            
+ |__   __|           | |            / ____| |                           
+    | | ___ _ __   __| | ___ _ __  | |    | | ___  __ _ _ __   ___ _ __ 
+    | |/ _ \ '_ \ / _` |/ _ \ '__| | |    | |/ _ \/ _` | '_ \ / _ \ '__|
+    | |  __/ | | | (_| |  __/ |    | |____| |  __/ (_| | | | |  __/ |   
+    |_|\___|_| |_|\__,_|\___|_|     \_____|_|\___|\__,_|_| |_|\___|_|  ");
+            Console.WriteLine("\nWelcome friend!\n");
             Console.WriteLine("Choose the number of who you are today:\n\t(1) --> Evgeny Terekhov - poor student\n\t(2) --> Bill Gates - Microsoft founder");
             Console.Write(">>> ");
             int persNum = Convert.ToInt32(Console.ReadLine())-1;
