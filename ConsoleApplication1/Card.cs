@@ -24,5 +24,10 @@ namespace ConsoleApplication1
             }
             return false;
         }
+        public bool Put(double sum)
+        {
+            Sum += sum;
+            return true;
+        }
     }
 }

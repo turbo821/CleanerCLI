@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 
@@ -11,7 +12,7 @@ namespace ConsoleApplication1
         private string firstName;
         private string lastName;
         private string secondName;
-        private bool signConstancy = false;
+        private bool regular = false;
         private Card card;
 
         public Client(string firstName, string lastName)
@@ -52,14 +53,14 @@ namespace ConsoleApplication1
             get { return card; } 
             set { card = value; } 
         }
-        public bool SignConstancy
+        public bool Regular
         {
-            get { return signConstancy; }
+            get { return regular; }
         }
-
+        public void IncreaseCounter(){ hitСounter++; }
         public override string ToString()
         {
-            if (signConstancy)
+            if (regular)
             {
                 return $"{FirstName} {secondName} {LastName} (constansy client)";
             }
@@ -67,7 +68,10 @@ namespace ConsoleApplication1
             {
                 return $"{FirstName} {secondName} {LastName} (not constansy client)";
             }
-            
+        }
+        public Order MakeOrder(Service service, Branch branch)
+        {
+            return new Order(this, service, branch);
         }
     }
 }

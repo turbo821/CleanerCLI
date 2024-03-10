@@ -82,15 +82,15 @@ namespace ConsoleApplication1
         private void SetQualityAndSpeed()
         {
             if (quality == 1)
-            { QualityAndSpeed.QualityList = new List<int>() { 25, 15, 5, 0, 0 }; }
+            { QualityAndSpeed.QualityList = new List<int>() { 25, 15, 5, -5, -10 }; }
             else if (quality == 2)
-            { QualityAndSpeed.QualityList = new List<int>() { 15, 20, 10, 0, 0 }; }
+            { QualityAndSpeed.QualityList = new List<int>() { 15, 20, 10, -5, -5 }; }
             else if (quality == 3)
-            { QualityAndSpeed.QualityList = new List<int>() { 0, 13, 20, 13, 0 }; }
+            { QualityAndSpeed.QualityList = new List<int>() { -3, 13, 20, 13, -3 }; }
             else if (quality == 4)
-            { QualityAndSpeed.QualityList = new List<int>() { 0, 0, 5, 20, 15 }; }
+            { QualityAndSpeed.QualityList = new List<int>() { -15, -10, 5, 20, 15 }; }
             else if (quality == 5)
-            { QualityAndSpeed.QualityList = new List<int>() { 0, 0, 5, 15, 25 }; }
+            { QualityAndSpeed.QualityList = new List<int>() { -20, -15, 5, 15, 25 }; }
 
             if (speed == 1)
             { QualityAndSpeed.SpeedFactor = 0.6; }

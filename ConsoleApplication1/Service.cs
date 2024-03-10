@@ -7,21 +7,30 @@ namespace ConsoleApplication1
 {
     public class Service
     {
-        ServiceType serviceType;
-        Allowance allowance;
-        public ServiceType ServiceType
+        private Clothing clothing;
+        private Allowance allowance;
+        private double price;
+        private QualityAndSpeed qualityAndSpeed;
+        public Service(Clothing clothing, Allowance allowance) 
+        {
+            Clothing = clothing;
+            Allowance = allowance;
+            SetPrice();
+            SetQualityAndSpeed();
+
+        }
+
+        public Clothing Clothing
         {
             get
             {
-                return serviceType;
+                return clothing;
             }
-
             set
             {
-                serviceType = value;
+                clothing = value;
             }
         }
-
         public Allowance Allowance
         {
             get
@@ -34,10 +43,26 @@ namespace ConsoleApplication1
                 allowance = value;
             }
         }
-
-        public void DisplayInfo()
+        public double Price
         {
-            Console.WriteLine($"Name: {serviceType.Name} - Complexity: {allowance.Quality}");
+            get { return price; }
+        }
+        public QualityAndSpeed QualityAndSpeed 
+        {
+            get { return qualityAndSpeed; } 
+        }
+
+        private void SetPrice()
+        {
+            price = Clothing.DefaultPrice * Allowance.PriceFastor;
+        }
+        private void SetQualityAndSpeed()
+        {
+            qualityAndSpeed = Clothing.QualityAndSpeed + Allowance.QualityAndSpeed;
+        }
+        public override string ToString()
+        {
+            return $"Clothing: {Clothing.Title}, Price washing - {Price}rub";
         }
     }
 }

@@ -11,16 +11,16 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            Client client1 = new CommonClient("Evgeny", "Terekhov", new Card("38492182", 700));
+            Client client1 = new CommonClient("Evgeny", "Terekhov", new Card("38492182", 800));
             Client client2 = new VipClient("Bill", "Gates", new Card("82912384", 120000));
             List<Client> persons = new List<Client>() { client1, client2 };
 
-            Clothing cap = new Clothing("Cap", 1, 2);
-            Clothing t_shirt = new Clothing("T-shirt", 3, 3);
-            Clothing winterCoat = new Clothing("Winter coat", 5, 4);
-            Clothing hat = new Clothing("Hat", 2, 1);
-            Clothing trousers = new Clothing("Trousers", 4, 3);
-            Clothing costume = new Clothing("Costume", 5, 5);
+            Clothing cap = new Clothing("Cap", 1, 2, 300);
+            Clothing t_shirt = new Clothing("T-shirt", 3, 3, 440);
+            Clothing winterCoat = new Clothing("Winter coat", 5, 4, 660);
+            Clothing hat = new Clothing("Hat", 2, 1, 400);
+            Clothing trousers = new Clothing("Trousers", 4, 3, 640);
+            Clothing costume = new Clothing("Costume", 5, 5, 1120);
             List<List<Clothing>> clothings = new List<List<Clothing>>() { new List<Clothing> { cap, t_shirt, winterCoat }, new List<Clothing>{hat, trousers, costume } };
    
             Console.WriteLine("\t\t< < < Tender Cleaners > > >");
@@ -31,28 +31,52 @@ namespace ConsoleApplication1
             Client client = persons[persNum];
             Console.WriteLine($"You {client}\n");
 
-            Console.WriteLine("Select the number of the clothes:" );
-            for (int c = 0; c < clothings[persNum].Count(); c++)
+            Console.Write("Enter the branch city: ");
+            string titleBranch = Console.ReadLine();
+            Branch branch = new Branch(titleBranch);
+
+            while (true)
             {
-                Console.WriteLine($"({c+1}) --> {clothings[persNum][c]}");
+                Console.WriteLine("\nSelect the number of the clothes:");
+                for (int c = 0; c < clothings[persNum].Count(); c++)
+                {
+                    Console.WriteLine($"({c + 1}) --> {clothings[persNum][c]}");
+                }
+                Console.Write(">>> ");
+                int clNum = Convert.ToInt32(Console.ReadLine()) - 1;
+                Clothing clothing = clothings[persNum][clNum];
+                Console.WriteLine($"You select: {clothing}\n");
+
+                Console.WriteLine("Select options:");
+                Allowance.DescriptionQuality();
+                Console.Write(">>> ");
+                int quality = Convert.ToInt32(Console.ReadLine());
+
+                Allowance.DescriptionSpeed();
+                Console.Write(">>> ");
+                int speed = Convert.ToInt32(Console.ReadLine());
+
+                Allowance allowance = new Allowance(quality, speed);
+                Console.WriteLine($"You select options:{allowance}\n");
+
+                Service service = new Service(clothing, allowance);
+                Console.WriteLine($"Total selected:\n\t {service} in {branch.Title}, start washing?(yes/no)");
+                Console.Write(">>> ");
+                string go = Console.ReadLine();
+                Console.WriteLine();
+                if (go == "no") { continue; }
+
+                Order order = client.MakeOrder(service, branch);
+                order.Washing();
+                order.GetResult();
+
+                Console.WriteLine("Finished?(yes/no)");
+                Console.Write(">>> ");
+                string finish = Console.ReadLine();
+                if(!(finish == "no")) { break; }
+                Console.WriteLine("Repeat");     
             }
-            Console.Write(">>> ");
-            int clNum = Convert.ToInt32(Console.ReadLine())-1;
-            Clothing clothing = clothings[persNum][clNum];
-            Console.WriteLine($"You select: {clothing}\n");
-
-            Console.WriteLine("Select options:");
-            Allowance.DescriptionQuality();
-            Console.Write(">>> ");
-            int quality = Convert.ToInt32(Console.ReadLine());
-
-            Allowance.DescriptionSpeed();
-            Console.Write(">>> ");
-            int speed = Convert.ToInt32(Console.ReadLine());
-
-            Allowance allowance = new Allowance(quality, speed);
-            Console.WriteLine($"You Select options:{allowance}");
-
+            Console.WriteLine("\nGoodBye!");
             Console.ReadKey();
         }
 

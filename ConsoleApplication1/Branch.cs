@@ -15,6 +15,10 @@ namespace ConsoleApplication1
             get { return title; }
             set { title = value; }
         }
+        public override string ToString()
+        {
+            return $"Branch in {Title}";
+        }
     }
 
 }

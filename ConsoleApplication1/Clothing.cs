@@ -11,13 +11,15 @@ namespace ConsoleApplication1
         private int size;
         private int pollutionLevel;
         public string Title {  get; set; }
+        public double DefaultPrice { get; set; }
         public QualityAndSpeed QualityAndSpeed { get; } = new QualityAndSpeed();
 
-        public Clothing(string title, int size, int pollutionLevel)
+        public Clothing(string title, int size, int pollutionLevel, double defaultPrice)
         {
             Title = title;
             Size = size;
             PollutionLevel = pollutionLevel;
+            DefaultPrice = defaultPrice;
         }
 
         public int Size
@@ -75,7 +77,7 @@ namespace ConsoleApplication1
         }
         public override string ToString()
         {
-            return $"{Title}, size - {Size}, pollution - {PollutionLevel}";
+            return $"{Title}, size - {Size}, pollution - {PollutionLevel}, default price washing - {DefaultPrice} rub";
         }
     }
 }
