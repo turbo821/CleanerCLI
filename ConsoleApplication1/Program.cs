@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Globalization;
 
 namespace ConsoleApplication1
 {
@@ -11,6 +12,8 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
+            CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+
             Client client1 = new CommonClient("Evgeny", "Terekhov", new Card("38492182", 800));
             Client client2 = new VipClient("Bill", "Gates", new Card("82912384", 120000));
             List<Client> persons = new List<Client>() { client1, client2 };
@@ -34,7 +37,6 @@ namespace ConsoleApplication1
             Console.Write(">>> ");
             int persNum = Convert.ToInt32(Console.ReadLine())-1;
             Client client = persons[persNum];
-            Console.WriteLine($"You {client}\n");
 
             Console.Write("Enter the branch city: ");
             string titleBranch = Console.ReadLine();
@@ -42,7 +44,8 @@ namespace ConsoleApplication1
 
             while (true)
             {
-                Console.WriteLine("\nSelect the number of the clothes:");
+                Console.WriteLine($"\nYou {client}\n");
+                Console.WriteLine("Select the number of the clothes:");
                 for (int c = 0; c < clothings[persNum].Count(); c++)
                 {
                     Console.WriteLine($"({c + 1}) --> {clothings[persNum][c]}");
@@ -65,13 +68,20 @@ namespace ConsoleApplication1
                 Console.WriteLine($"You select options:{allowance}\n");
 
                 Service service = new Service(clothing, allowance);
-                Console.WriteLine($"Total selected:\n\t {service} in {branch.Title}, start washing?(yes/no)");
+                Console.WriteLine($"Total selected:\n\t {service}, {branch}, make order?(yes/no)");
                 Console.Write(">>> ");
                 string go = Console.ReadLine();
                 Console.WriteLine();
                 if (go == "no") { continue; }
 
                 Order order = client.MakeOrder(service, branch);
+
+                Console.WriteLine($"Order Data:\n{order}\nWash?(yes/no)");
+                Console.Write(">>> ");
+                go = Console.ReadLine();
+                Console.WriteLine();
+                if (go == "no") { continue; }
+
                 order.Washing();
                 order.GetResult();
 

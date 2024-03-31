@@ -8,13 +8,15 @@ namespace ConsoleApplication1
 {
     public class Card
     {
-        private string number;
-        public double Sum { get; private set; }
         public Card(string number, double sum)
         {
-            this.number = number;
+            this.Number = number;
             this.Sum = sum;
         }
+
+        public double Sum { get; private set; }
+        public string Number { get; private set; }
+
         public bool Take(double sum)
         {
             if (Sum >= sum)

@@ -7,6 +7,8 @@ namespace ConsoleApplication1
 {
     public class VipClient : Client
     {
+        public readonly QualityAndSpeed privilege = new QualityAndSpeed(new List<int>() { 0, 0, 0, 15, 35 }, 1.25);
+
         public VipClient(string firstName, string lastName)
             : base(firstName, lastName)
         { }

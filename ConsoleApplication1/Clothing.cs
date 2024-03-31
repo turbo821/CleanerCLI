@@ -10,9 +10,6 @@ namespace ConsoleApplication1
     {
         private int size;
         private int pollutionLevel;
-        public string Title {  get; set; }
-        public double DefaultPrice { get; set; }
-        public QualityAndSpeed QualityAndSpeed { get; } = new QualityAndSpeed();
 
         public Clothing(string title, int size, int pollutionLevel, double defaultPrice)
         {
@@ -21,7 +18,9 @@ namespace ConsoleApplication1
             PollutionLevel = pollutionLevel;
             DefaultPrice = defaultPrice;
         }
-
+        public string Title {  get; set; }
+        public double DefaultPrice { get; set; }
+        public QualityAndSpeed QualityAndSpeed { get; private set; } = new QualityAndSpeed();
         public int Size
         {
             get { return size; }

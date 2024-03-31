@@ -9,11 +9,6 @@ namespace ConsoleApplication1
     public abstract class Client
     {
         private int hitСounter = 0;
-        private string firstName;
-        private string lastName;
-        private string secondName;
-        private bool regular = false;
-        private Card card;
 
         public Client(string firstName, string lastName)
         {
@@ -32,41 +27,30 @@ namespace ConsoleApplication1
         {
             Card = card;
         }
-        public string FirstName
-        {
-            get { return firstName; }
-            set { firstName = value; }
-        }
 
-        public string LastName
-        {
-            get { return lastName; }
-            set { lastName = value; }
-        }
-        public string SecondName
-        {
-            get { return secondName; }
-            set { secondName = value; }
-        }
-        public Card Card 
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string SecondName { get; set; }
+        public Card Card { get; set; }
+        public bool Regular { get; private set; } = false;
+
+        public void IncreaseCounter()
         { 
-            get { return card; } 
-            set { card = value; } 
+            hitСounter++;
+            if (hitСounter  >= 3)
+            {
+                Regular = true;
+            }
         }
-        public bool Regular
-        {
-            get { return regular; }
-        }
-        public void IncreaseCounter(){ hitСounter++; }
         public override string ToString()
         {
-            if (regular)
+            if (Regular)
             {
-                return $"{FirstName} {secondName} {LastName} (constansy client)";
+                return $"{FirstName} {SecondName} {LastName} (constansy client)";
             }
             else
             {
-                return $"{FirstName} {secondName} {LastName} (not constansy client)";
+                return $"{FirstName} {SecondName} {LastName} (not constansy client)";
             }
         }
         public Order MakeOrder(Service service, Branch branch)

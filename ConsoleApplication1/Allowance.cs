@@ -9,11 +9,8 @@ namespace ConsoleApplication1
 {
     public class Allowance
     {
-        private string title;
         private int quality;
         private int speed;
-        private double priceFactor;
-        public QualityAndSpeed QualityAndSpeed { get; } = new QualityAndSpeed();
 
         public Allowance(int quality, int speed)
         {
@@ -22,7 +19,9 @@ namespace ConsoleApplication1
             SetTitle();
         }
 
-        public string Title { get { return title; } }
+        public QualityAndSpeed QualityAndSpeed { get; private set; } = new QualityAndSpeed();
+        public string Title { get; private set; }
+        public double PriceFactor { get; private set; }
         public int Quality
         {
             get { return quality; }
@@ -49,35 +48,32 @@ namespace ConsoleApplication1
                 SetQualityAndSpeed(); SetPrice();
             }
         }
-        public double PriceFastor
-        {
-            get { return priceFactor; }
-        }
+
         private void SetTitle()
         {
             string q = " quality and ";
             string s = " speed washing";
             if (quality == 1)
-            { title = "economy(E)" + q; }
+            { Title = "economy(E)" + q; }
             else if (quality == 2)
-            { title = "satisfactorily(D)" + q; }
+            { Title = "satisfactorily(D)" + q; }
             else if (quality == 3)
-            { title = "normal(C)" + q; }
+            { Title = "normal(C)" + q; }
             else if (quality == 4)
-            { title = "good(B)" + q; }
+            { Title = "good(B)" + q; }
             else if (quality == 5)
-            { title = "great(A)" + q; }
+            { Title = "great(A)" + q; }
 
             if (speed == 1)
-            { title = title + "very slowly" + s; }
+            { Title = Title + "very slowly" + s; }
             else if (speed == 2)
-            { title = title + "slowly" + s; }
+            { Title = Title + "slowly" + s; }
             else if (speed == 3)
-            { title = title + "normal" + s; }
+            { Title = Title + "normal" + s; }
             else if (speed == 4)
-            { title = title + "fast" + s; }
+            { Title = Title + "fast" + s; }
             else if (speed == 5)
-            { title = title + "very fast" + s; }
+            { Title = Title + "very fast" + s; }
         }
         private void SetQualityAndSpeed()
         {
@@ -105,12 +101,13 @@ namespace ConsoleApplication1
         }
         private void SetPrice()
         {
-            priceFactor = 1 + 0.20 * (quality - 1) + 0.18 * (speed - 1);
+            PriceFactor = Math.Round(1 + 0.20 * (quality - 1) + 0.18 * (speed - 1), 2);
 
         }
+
         public override string ToString()
         {
-            return $"{Title}, default price will increase {priceFactor} times";
+            return $"{Title}, default price will increase {PriceFactor} times";
         }
         public static void DescriptionQuality()
         {
