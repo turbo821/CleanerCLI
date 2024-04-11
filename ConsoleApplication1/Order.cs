@@ -7,11 +7,11 @@ using System.Threading;
 
 namespace ConsoleApplication1
 {
-    public class Order
+    public class Order : IDisplayable, IHaveQSList
     {
-        private QualityAndSpeed qsList = new QualityAndSpeed(new List<int> { 50, 50, 50, 50, 50 }, 1);
-
-        public Order(Client client, Service service, Branch branch)
+        private double discountOfDay = 0.02;
+        private double discountOfRegular = 0.05;
+        public Order(IClient client, Service service, Branch branch)
         { 
             Client = client;
             Service = service;
@@ -19,22 +19,24 @@ namespace ConsoleApplication1
             ReceiptDate = DateTime.Now;
 
             FinalPrace = Service.Price;
-            if (Client.Regular) { FinalPrace *= 0.95; }
+            if (Service.Clothing.discountDay == ReceiptDate.DayOfWeek) FinalPrace *= 1 - discountOfDay;
+            if (Client.Regular) FinalPrace *= 1 - discountOfRegular; 
             
-            qsList = qsList + Service.QualityAndSpeed;
-            if (Client is VipClient) { qsList += ((VipClient)Client).privilege; }
+            QualityAndSpeed = QualityAndSpeed + Service.QualityAndSpeed;
+            if (Client is VipClient) { QualityAndSpeed += ((VipClient)Client).privilege; }
 
-            ResultTime = Math.Round(10 / (qsList.SpeedFactor), 3);
+            ResultTime = Math.Round(10 / (QualityAndSpeed.SpeedFactor), 3);
         }
 
-        public Client Client { get; private set; }
+        public IClient Client { get; private set; }
         public Service Service { get; private set; }
         public Branch Branch { get; private set; }
-        public DateTime? ReceiptDate { get; private set; }
+        public DateTime ReceiptDate { get; private set; }
         public DateTime? ReturnDate { get; private set; } = null;
         public double FinalPrace { get; private set; }
         public double ResultTime { get; private set; }
         public string QualityResult { get; private set; }
+        public QualityAndSpeed QualityAndSpeed { get; private set; } = new QualityAndSpeed(new List<int> { 50, 50, 50, 50, 50 }, 1);
 
         private string SetQualityResult(int q)
         {
@@ -53,7 +55,7 @@ namespace ConsoleApplication1
                 {
                     Console.WriteLine("Washing in progress...");
 
-                    List<int> extendQualityList = qsList.MakeExtendQualityList();
+                    List<int> extendQualityList = QualityAndSpeed.MakeExtendQualityList();
 
                     int qualityResultNumber = extendQualityList[new Random().Next(0, extendQualityList.Count)];
                     QualityResult = SetQualityResult(qualityResultNumber);
@@ -76,9 +78,9 @@ namespace ConsoleApplication1
             }
         }
 
-        public override string ToString()
+        public void DisplayInfo()
         {
-            return $"Final price: {FinalPrace}, Wash time: {ResultTime}, Final quality list: {qsList.DisplayList()}";
+            Console.WriteLine($"Order: final price: {FinalPrace}, wash time: {ResultTime}, final quality list: {QualityAndSpeed.DisplayList()}");
         }
 
         public void GetResult()

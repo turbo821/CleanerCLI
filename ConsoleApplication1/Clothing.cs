@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
-    public class Clothing
+    public abstract class Clothing : IDisplayable, IHaveQSList //shoes, outerwear, underwear, headdress
     {
         private int size;
         private int pollutionLevel;
+        public readonly DayOfWeek discountDay;
 
         public Clothing(string title, int size, int pollutionLevel, double defaultPrice)
         {
@@ -74,9 +75,9 @@ namespace ConsoleApplication1
             else if (pollutionLevel == 5)
             { QualityAndSpeed.QualityList = new List<int>() { 20, 15, 0, -10, -15 }; }
         }
-        public override string ToString()
+        public void DisplayInfo()
         {
-            return $"{Title}, size - {Size}, pollution - {PollutionLevel}, default price washing - {DefaultPrice} rub";
+            Console.WriteLine($"Clothing: {Title}, size - {Size}, pollution - {PollutionLevel}, default price washing - {DefaultPrice} rub");
         }
     }
 }

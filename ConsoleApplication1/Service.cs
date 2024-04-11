@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ConsoleApplication1
 {
-    public class Service
+    public class Service : IDisplayable, IHaveQSList
     {
         private Clothing clothing = null;
         private Allowance allowance = null;
@@ -28,17 +28,19 @@ namespace ConsoleApplication1
 
         private void SetPrice()
         {
-            if(clothing != null && allowance != null) 
+            if (clothing != null && allowance != null)
+            {
                 Price = Clothing.DefaultPrice * Allowance.PriceFactor;
+            }
         }
         private void SetQualityAndSpeed()
         {
             if (clothing != null && allowance != null)
                 QualityAndSpeed = Clothing.QualityAndSpeed + Allowance.QualityAndSpeed;
         }
-        public override string ToString()
+        public  void DisplayInfo()
         {
-            return $"Clothing: {Clothing.Title}, Quality list: {QualityAndSpeed.DisplayList()}, Speed factor: {QualityAndSpeed.SpeedFactor}";
+            Console.WriteLine($"Service: clothing - {Clothing.Title}, quality list - {QualityAndSpeed.DisplayList()}, speed factor - {QualityAndSpeed.SpeedFactor}");
         }
     }
 }

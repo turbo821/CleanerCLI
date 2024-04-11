@@ -21,5 +21,16 @@ namespace ConsoleApplication1
         public VipClient(string firstName, string lastName, string secondName, Card card) :
             base(firstName, lastName, secondName, card)
         { }
+        public override void DisplayInfo()
+        {
+            if (Regular)
+            {
+                Console.WriteLine($"Vip Client: {FirstName} {SecondName} {LastName} (regular client)");
+            }
+            else
+            {
+                Console.WriteLine($"Vip Client: {FirstName} {SecondName} {LastName} (not regular client)");
+            }
+        }
     }
 }

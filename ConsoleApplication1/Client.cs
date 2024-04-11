@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ConsoleApplication1
 {
-    public abstract class Client
+    public abstract class Client : IClient
     {
         private int hitСounter = 0;
 
@@ -42,17 +42,8 @@ namespace ConsoleApplication1
                 Regular = true;
             }
         }
-        public override string ToString()
-        {
-            if (Regular)
-            {
-                return $"{FirstName} {SecondName} {LastName} (constansy client)";
-            }
-            else
-            {
-                return $"{FirstName} {SecondName} {LastName} (not constansy client)";
-            }
-        }
+        public abstract void DisplayInfo();
+        
         public Order MakeOrder(Service service, Branch branch)
         {
             return new Order(this, service, branch);

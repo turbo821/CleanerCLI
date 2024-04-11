@@ -5,15 +5,15 @@ using System.Text;
 
 namespace ConsoleApplication1
 {
-    public class Branch
+    public class Branch : IDisplayable
     {
         public Branch(string title) { Title = title; }
 
         public string Title { get; set; }
 
-        public override string ToString()
+        public void DisplayInfo()
         {
-            return $"Branch in {Title}";
+            Console.WriteLine($"Branch in {Title}");
         }
     }
 
