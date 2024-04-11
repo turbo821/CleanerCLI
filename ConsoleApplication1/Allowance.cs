@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ConsoleApplication1
 {
-    public class Allowance
+    public class Allowance : IDisplayable, IHaveQSList
     {
         private int quality;
         private int speed;
@@ -105,9 +105,9 @@ namespace ConsoleApplication1
 
         }
 
-        public override string ToString()
+        public void DisplayInfo()
         {
-            return $"{Title}, default price will increase {PriceFactor} times";
+            Console.WriteLine($"Allowance: {Title}, default price will increase {PriceFactor} times");
         }
         public static void DescriptionQuality()
         {

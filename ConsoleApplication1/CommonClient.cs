@@ -20,5 +20,16 @@ namespace ConsoleApplication1
         public CommonClient(string firstName, string lastName, string secondName, Card card) : 
             base(firstName, lastName, secondName, card)
         { }
+        public override void DisplayInfo()
+        {
+            if (Regular)
+            {
+                Console.WriteLine($"Common Client:\n{FirstName} {SecondName} {LastName} (regular client)");
+            }
+            else
+            {
+                Console.WriteLine($"Common Client:\n{FirstName} {SecondName} {LastName} (not regular client)");
+            }
+        }
     }
 }
