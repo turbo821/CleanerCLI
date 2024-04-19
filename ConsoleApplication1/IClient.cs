@@ -11,6 +11,6 @@ namespace ConsoleApplication1
         Card Card { get; set; }
         bool Regular { get; }
         void IncreaseCounter();
-        Order MakeOrder(Service service, Branch branch);
+        //Order MakeOrder(Service service, Branch branch);
     }
 }

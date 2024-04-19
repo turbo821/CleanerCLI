@@ -5,17 +5,20 @@ using System.Text;
 
 namespace ConsoleApplication1
 {
-    public class Service : IDisplayable, IHaveQSList
+    public class Service<T> : IDisplayable, IHaveQSList
+        where T : Clothing
     {
-        private Clothing clothing = null;
+        private T clothing = null;
         private Allowance allowance = null;
-        public Service(Clothing clothing, Allowance allowance) 
+        public Service(T clothing, Allowance allowance) 
         {
-            Clothing = clothing;
+            Clothing = (T)clothing;
             Allowance = allowance;
+            Price = clothing.DefaultPrice * allowance.PriceFactor;
+            QualityAndSpeed = clothing.QualityAndSpeed + allowance.QualityAndSpeed;
         }
 
-        public Clothing Clothing { 
+        public T Clothing { 
             get  { return clothing; }
             set  { clothing = value; SetPrice(); SetQualityAndSpeed(); } }
         public Allowance Allowance

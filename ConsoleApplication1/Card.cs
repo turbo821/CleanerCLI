@@ -14,8 +14,8 @@ namespace ConsoleApplication1
             this.Sum = sum;
         }
 
-        public double Sum { get; private set; }
         public string Number { get; private set; }
+        public double Sum { get; private set; }
 
         public bool Take(double sum)
         {

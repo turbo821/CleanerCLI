@@ -41,9 +41,9 @@ namespace ConsoleApplication1
             }
         }
 
-        public Order MakeOrder(Service service, Branch branch) 
-        {
-            return new Order(this, service, branch);
-        }
+        //public Order MakeOrder(Service service, Branch branch) 
+        //{
+        //    return new Order(this, service, branch);
+        //}
     }
 }

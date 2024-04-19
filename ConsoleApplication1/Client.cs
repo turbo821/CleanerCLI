@@ -10,21 +10,11 @@ namespace ConsoleApplication1
     {
         private int hitСounter = 0;
 
-        public Client(string firstName, string lastName)
+        public Client(string firstName, string lastName, string secondName, Card card)
         {
             FirstName = firstName;
             LastName = lastName;
-        }
-        public Client(string firstName, string lastName, Card card) : this(firstName, lastName)
-        {
-            Card = card;
-        }
-        public Client(string firstName, string lastName, string secondName) : this(firstName, lastName)
-        {
             SecondName = secondName;
-        }
-        public Client(string firstName, string lastName, string secondName, Card card) : this(firstName, lastName, secondName)
-        {
             Card = card;
         }
 
@@ -44,9 +34,9 @@ namespace ConsoleApplication1
         }
         public abstract void DisplayInfo();
         
-        public Order MakeOrder(Service service, Branch branch)
-        {
-            return new Order(this, service, branch);
-        }
+        //public Order MakeOrder(Service service, Branch branch)
+        //{
+        //    return new Order(this, service, branch);
+        //}
     }
 }

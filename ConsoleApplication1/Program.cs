@@ -5,102 +5,71 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Globalization;
+using System.IO;
+using System.Text.Json;
 
 namespace ConsoleApplication1
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-
-            Client client1 = new CommonClient("Evgeny", "Terekhov", new Card("38492182", 800));
-            Client client2 = new VipClient("Bill", "Gates", new Card("82912384", 120000));
-            List<Client> persons = new List<Client>() { client1, client2 };
-
+            // creating objects
+            Card card1 = new Card("38492182", 800);
+            IClient client1 = new CommonClient("Evgeny", "Terekhov", "Igorevich", card1);
+            IClient client2 = new VipClient("Bill", "Gates", null, new Card("82912384", 120000));
+            IClient client3 = new LegalEntity("Google", new Card("67235114", 16000000));
             Clothing cap = new Headdress("Cap", 1, 2, 300);
             Clothing t_shirt = new Underwear("T-shirt", 3, 3, 440);
             Clothing winterCoat = new Outerwear("Winter coat", 5, 4, 660);
             Clothing hat = new Headdress("Hat", 2, 1, 400);
             Clothing trousers = new Outerwear("Trousers", 4, 3, 640);
             Clothing costume = new Outerwear("Costume", 5, 5, 1120);
-            List<List<Clothing>> clothings = new List<List<Clothing>>() { new List<Clothing> { cap, t_shirt, winterCoat }, new List<Clothing> { hat, trousers, costume } };
+            Branch moscow = new Branch("Moscow");
+            Branch berlin = new Branch("Berlin");
+            Branch london = new Branch("London");
+            Allowance allowance = new Allowance(3, 4);
+            Service<Underwear> service = new Service<Underwear>((Underwear)t_shirt, allowance);
+            //Order order = client2.MakeOrder(service, berlin);
 
-            Console.WriteLine(@"  _______             _              _____ _                            
- |__   __|           | |            / ____| |                           
-    | | ___ _ __   __| | ___ _ __  | |    | | ___  __ _ _ __   ___ _ __ 
-    | |/ _ \ '_ \ / _` |/ _ \ '__| | |    | |/ _ \/ _` | '_ \ / _ \ '__|
-    | |  __/ | | | (_| |  __/ |    | |____| |  __/ (_| | | | |  __/ |   
-    |_|\___|_| |_|\__,_|\___|_|     \_____|_|\___|\__,_|_| |_|\___|_|  ");
-            Console.WriteLine("\nWelcome friend!\n");
-            Console.WriteLine("Choose the number of who you are today:\n\t(1) --> Evgeny Terekhov - poor student\n\t(2) --> Bill Gates - Microsoft founder");
-            Console.Write(">>> ");
-            int persNum = Convert.ToInt32(Console.ReadLine()) - 1;
-            Client client = persons[persNum];
+            // writing and reading to a json file for each object of a certain class
 
-            Console.Write("Enter the branch city: ");
-            string titleBranch = Console.ReadLine();
-            Branch branch = new Branch(titleBranch);
+            // for Branch
+            await JsonFileManager.Write<Branch>("json/branch.json", berlin);
+            Branch branchFile = await JsonFileManager.Read<Branch>("json/branch.json");
+            branchFile.DisplayInfo();
+            // for Allowance
+            await JsonFileManager.Write<Allowance>("json/allowance.json", allowance);
+            Allowance allowanceFile = await JsonFileManager.Read<Allowance>("json/allowance.json");
+            allowanceFile.DisplayInfo();
+            // for Card
+            await JsonFileManager.Write<Card>("json/card.json", card1);
+            Card cardFile = await JsonFileManager.Read<Card>("json/card.json");
+            Console.WriteLine(cardFile.Number);
 
-            while (true)
-            {
-                Console.WriteLine();
-                client.DisplayInfo();
-                Console.WriteLine("Select the number of the clothes:");
-                for (int c = 0; c < clothings[persNum].Count(); c++)
-                {
-                    Console.Write($"({c + 1}) --> ");
-                    clothings[persNum][c].DisplayInfo();
-                }
-                Console.Write(">>> ");
-                int clNum = Convert.ToInt32(Console.ReadLine()) - 1;
-                Clothing clothing = clothings[persNum][clNum];
-                Console.Write($"You select: ");
-                clothing.DisplayInfo();
+            // for Client
+            await JsonFileManager.Write<VipClient>("json/client.json", (VipClient)client2);
+            VipClient clientFile = await JsonFileManager.Read<VipClient>("json/client.json");
+            clientFile.DisplayInfo();
 
-                Console.WriteLine("\nSelect options:");
-                Allowance.DescriptionQuality();
-                Console.Write(">>> ");
-                int quality = Convert.ToInt32(Console.ReadLine());
+            // for LegalEntity
+            await JsonFileManager.Write<LegalEntity>("json/legalEntity.json", (LegalEntity)client3);
+            LegalEntity legalEntityFile = await JsonFileManager.Read<LegalEntity>("json/legalEntity.json");
+            legalEntityFile.DisplayInfo();
 
-                Allowance.DescriptionSpeed();
-                Console.Write(">>> ");
-                int speed = Convert.ToInt32(Console.ReadLine());
+            // for Clothing
+            await JsonFileManager.Write<Clothing>("json/clothing.json", t_shirt);
+            Underwear clothingFile = await JsonFileManager.Read<Underwear>("json/clothing.json");
+            clothingFile.DisplayInfo();
 
-                Allowance allowance = new Allowance(quality, speed);
-                Console.WriteLine($"You select options: ");
-                allowance.DisplayInfo(); Console.WriteLine();
+            // for Service
+            await JsonFileManager.Write<Service<Underwear>>("json/service.json", service);
+            Service<Underwear> serviceFile = await JsonFileManager.Read<Service<Underwear>>("json/service.json");
+            serviceFile.DisplayInfo();
 
-                Service service = new Service(clothing, allowance);
-                Console.WriteLine($"Total selected:");
-                service.DisplayInfo();
-                branch.DisplayInfo();
-                Console.WriteLine("Make order?(yes/no)");
-                
-                Console.Write(">>> ");
-                string go = Console.ReadLine();
-                Console.WriteLine();
-                if (go == "no") { continue; }
+            // for Order
 
-                Order order = client.MakeOrder(service, branch);
-                order.DisplayInfo();
-                Console.WriteLine("Wash?(yes/no)");
-                Console.Write(">>> ");
-                go = Console.ReadLine();
-                Console.WriteLine();
 
-                if (go == "no") { continue; }
-
-                order.Washing();
-                order.GetResult();
-
-                Console.WriteLine("Finished?(yes/no)");
-                Console.Write(">>> ");
-                string finish = Console.ReadLine();
-                if (!(finish == "no")) { break; }
-                Console.WriteLine("Repeat");
-            }
-            Console.WriteLine("\nGoodBye!");
             Console.ReadKey();
         }
 
