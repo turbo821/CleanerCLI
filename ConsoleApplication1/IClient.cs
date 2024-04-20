@@ -11,6 +11,8 @@ namespace ConsoleApplication1
         Card Card { get; set; }
         bool Regular { get; }
         void IncreaseCounter();
-        //Order MakeOrder(Service service, Branch branch);
+        //Order<TypeClothing, TypeClient> MakeOrder<TypeClothing, TypeClient>(Service<TypeClothing> service, Branch branch) 
+        //    where TypeClothing : Clothing
+        //    where TypeClient : IClient;
     }
 }

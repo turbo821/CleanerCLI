@@ -33,10 +33,12 @@ namespace ConsoleApplication1
             }
         }
         public abstract void DisplayInfo();
-        
-        //public Order MakeOrder(Service service, Branch branch)
+
+        //public Order<TypeClothing, TypeClient> MakeOrder<TypeClothing, TypeClient>(Service<TypeClothing> service, Branch branch) 
+        //    where TypeClothing : Clothing
+        //    where TypeClient : IClient
         //{
-        //    return new Order(this, service, branch);
+        //    return new Order<TypeClothing, TypeClient>((TypeClient)(this), service, branch);
         //}
     }
 }

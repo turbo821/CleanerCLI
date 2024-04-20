@@ -5,92 +5,94 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-//namespace ConsoleApplication1
-//{
-//    public class Order : IDisplayable, IHaveQSList
-//    {
-//        private double discountOfDay = 0.02;
-//        private double discountOfRegular = 0.05;
-//        public Order(IClient client, Service service, Branch branch)
-//        { 
-//            Client = client;
-//            Service = service;
-//            Branch = branch;
-//            ReceiptDate = DateTime.Now;
+namespace ConsoleApplication1
+{
+    public class Order<TypeClothing, TypeClient> : IDisplayable, IHaveQSList
+        where TypeClothing : Clothing
+        where TypeClient : IClient
+    {
+        private double discountOfDay = 0.02;
+        private double discountOfRegular = 0.05;
+        public Order(TypeClient client, Service<TypeClothing> service, Branch branch)
+        {
+            Client = client;
+            Service = service;
+            Branch = branch;
+            ReceiptDate = DateTime.Now;
 
-//            FinalPrace = Service.Price;
-//            if (Service.Clothing.DiscountDay == ReceiptDate.DayOfWeek) FinalPrace *= 1 - discountOfDay;
-//            if (Client.Regular) FinalPrace *= 1 - discountOfRegular; 
-            
-//            QualityAndSpeed = QualityAndSpeed + Service.QualityAndSpeed;
-//            if (Client is VipClient) { QualityAndSpeed += ((VipClient)Client).privilege; }
+            FinalPrice = Service.Price;
+            if (Service.Clothing.DiscountDay == ReceiptDate.DayOfWeek) FinalPrice *= 1 - discountOfDay;
+            if (Client.Regular) FinalPrice = Math.Round(FinalPrice * 1 - discountOfRegular, 2);
 
-//            ResultTime = Math.Round(10 / (QualityAndSpeed.SpeedFactor), 3);
-//        }
+            QualityAndSpeed = QualityAndSpeed + Service.QualityAndSpeed;
+            if (Client is VipClient) { QualityAndSpeed += (Client as VipClient).privilege; }
 
-//        public IClient Client { get; private set; }
-//        public Service Service { get; private set; }
-//        public Branch Branch { get; private set; }
-//        public DateTime ReceiptDate { get; private set; }
-//        public DateTime? ReturnDate { get; private set; } = null;
-//        public double FinalPrace { get; private set; }
-//        public double ResultTime { get; private set; }
-//        public string QualityResult { get; private set; }
-//        public QualityAndSpeed QualityAndSpeed { get; private set; } = new QualityAndSpeed(new List<int> { 50, 50, 50, 50, 50 }, 1);
+            ResultTime = Math.Round(10 / (QualityAndSpeed.SpeedFactor), 3);
+        }
 
-//        private string SetQualityResult(int q)
-//        {
-//            if (q == 1) { return "Washed badly"; }
-//            else if (q == 2) { return "Washed satisfactorily"; }
-//            else if (q == 3) { return "Washed fine"; }
-//            else if (q == 4) { return "Washed well"; }
-//            else{ return "Washed perfectly"; }
-//        }
-//        public void Washing()
-//        {
-//            if(ReturnDate == null) 
-//            {
-//                bool paymentCompleted = Client.Card.Take(FinalPrace);
-//                if (paymentCompleted)
-//                {
-//                    Console.WriteLine("Washing in progress...");
+        public TypeClient Client { get; private set; }
+        public Service<TypeClothing> Service { get; private set; }
+        public Branch Branch { get; private set; }
+        public DateTime ReceiptDate { get; private set; }
+        public DateTime? ReturnDate { get; private set; } = null;
+        public double FinalPrice { get; private set; }
+        public double ResultTime { get; private set; }
+        public string QualityResult { get; private set; }
+        public QualityAndSpeed QualityAndSpeed { get; private set; } = new QualityAndSpeed(new List<int> { 50, 50, 50, 50, 50 }, 1);
 
-//                    List<int> extendQualityList = QualityAndSpeed.MakeExtendQualityList();
+        private string SetQualityResult(int q)
+        {
+            if (q == 1) { return "Washed badly"; }
+            else if (q == 2) { return "Washed satisfactorily"; }
+            else if (q == 3) { return "Washed fine"; }
+            else if (q == 4) { return "Washed well"; }
+            else { return "Washed perfectly"; }
+        }
+        public void Washing()
+        {
+            if (ReturnDate == null)
+            {
+                bool paymentCompleted = Client.Card.Take(FinalPrice);
+                if (paymentCompleted)
+                {
+                    Console.WriteLine("Washing in progress...");
 
-//                    int qualityResultNumber = extendQualityList[new Random().Next(0, extendQualityList.Count)];
-//                    QualityResult = SetQualityResult(qualityResultNumber);
+                    List<int> extendQualityList = QualityAndSpeed.MakeExtendQualityList();
 
-                    
-//                    Thread.Sleep(Convert.ToInt32(ResultTime*1000));
+                    int qualityResultNumber = extendQualityList[new Random().Next(0, extendQualityList.Count)];
+                    QualityResult = SetQualityResult(qualityResultNumber);
 
-//                    Client.IncreaseCounter();
-//                    ReturnDate = DateTime.Now;
-//                    Console.WriteLine("Washing done!");
-//                }
-//                else
-//                {
-//                    Console.WriteLine($"There is not enough money on the card, top up your account with {FinalPrace - Client.Card.Sum} rubles");
-//                }
-//            }
-//            else
-//            {
-//                Console.WriteLine("Order completed");
-//            }
-//        }
 
-//        public void DisplayInfo()
-//        {
-//            Console.WriteLine($"Order: final price: {FinalPrace}, wash time: {ResultTime}, final quality list: {QualityAndSpeed.DisplayList()}");
-//        }
+                    Thread.Sleep(Convert.ToInt32(ResultTime * 1000)); // wait time..
 
-//        public void GetResult()
-//        {
-//            if(ReceiptDate != null)
-//            {
-//                Console.WriteLine($"The resulting wash quality: {QualityResult}\nLead time wash: {ResultTime}s");
-//                Console.WriteLine($"-{FinalPrace} rubles from the card, {Client.Card.Sum}rub remained");
-//            }
-//            else { Console.WriteLine($"Washing not completed"); }
-//        }
-//    }
-//}
+                    Client.IncreaseCounter();
+                    ReturnDate = DateTime.Now;
+                    Console.WriteLine("Washing done!");
+                }
+                else
+                {
+                    Console.WriteLine($"There is not enough money on the card, top up your account with {FinalPrice - Client.Card.Sum} rubles");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Order completed");
+            }
+        }
+
+        public void DisplayInfo()
+        {
+            Console.WriteLine($"Order: final price: {FinalPrice}, wash time: {ResultTime}, final quality list: {QualityAndSpeed.DisplayList()}");
+        }
+
+        public void GetResult()
+        {
+            if (ReceiptDate != null)
+            {
+                Console.WriteLine($"The resulting wash quality: {QualityResult}\nLead time wash: {ResultTime}s");
+                Console.WriteLine($"-{FinalPrice} rubles from the card, {Client.Card.Sum}rub remained");
+            }
+            else { Console.WriteLine($"Washing not completed"); }
+        }
+    }
+}

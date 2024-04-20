@@ -41,9 +41,9 @@ namespace ConsoleApplication1
             }
         }
 
-        //public Order MakeOrder(Service service, Branch branch) 
+        //public Order<TypeClothing> MakeOrder<TypeClothing>(Service<TypeClothing> service, Branch branch) where TypeClothing : Clothing
         //{
-        //    return new Order(this, service, branch);
+        //    return new Order<TypeClothing>(this, service, branch);
         //}
     }
 }

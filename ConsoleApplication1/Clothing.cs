@@ -10,7 +10,7 @@ namespace ConsoleApplication1
     {
         private int size;
         private int pollutionLevel;
-        public virtual DayOfWeek DiscountDay { get; set; } = DayOfWeek.Tuesday;
+        public virtual DayOfWeek DiscountDay { get; set; }
 
         public Clothing(string title, int size, int pollutionLevel, double defaultPrice)
         {

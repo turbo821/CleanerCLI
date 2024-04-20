@@ -52,7 +52,7 @@ namespace ConsoleApplication1
             List<int> quList = new List<int>() { object1.QualityList[0] + object2.QualityList[0], object1.QualityList[1] + object2.QualityList[1],
             object1.QualityList[2] + object2.QualityList[2],object1.QualityList[3] + object2.QualityList[3],
             object1.QualityList[4] + object2.QualityList[4]};
-            double spFactor = object1.SpeedFactor * object2.SpeedFactor;
+            double spFactor = Math.Round(object1.SpeedFactor * object2.SpeedFactor, 2);
             return new QualityAndSpeed(quList, spFactor);
         }
 

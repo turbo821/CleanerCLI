@@ -5,20 +5,20 @@ using System.Text;
 
 namespace ConsoleApplication1
 {
-    public class Service<T> : IDisplayable, IHaveQSList
-        where T : Clothing
+    public class Service<TypeClothing> : IDisplayable, IHaveQSList
+        where TypeClothing : Clothing
     {
-        private T clothing = null;
-        private Allowance allowance = null;
-        public Service(T clothing, Allowance allowance) 
+        private TypeClothing clothing;
+        private Allowance allowance;
+        public Service(TypeClothing clothing, Allowance allowance) 
         {
-            Clothing = (T)clothing;
+            Clothing = clothing;
             Allowance = allowance;
-            Price = clothing.DefaultPrice * allowance.PriceFactor;
+            Price = Math.Round(clothing.DefaultPrice * allowance.PriceFactor, 2);
             QualityAndSpeed = clothing.QualityAndSpeed + allowance.QualityAndSpeed;
         }
 
-        public T Clothing { 
+        public TypeClothing Clothing { 
             get  { return clothing; }
             set  { clothing = value; SetPrice(); SetQualityAndSpeed(); } }
         public Allowance Allowance
@@ -33,7 +33,7 @@ namespace ConsoleApplication1
         {
             if (clothing != null && allowance != null)
             {
-                Price = Clothing.DefaultPrice * Allowance.PriceFactor;
+                Price = Math.Round(Clothing.DefaultPrice * Allowance.PriceFactor, 2);
             }
         }
         private void SetQualityAndSpeed()
@@ -43,7 +43,7 @@ namespace ConsoleApplication1
         }
         public  void DisplayInfo()
         {
-            Console.WriteLine($"Service: clothing - {Clothing.Title}, quality list - {QualityAndSpeed.DisplayList()}, speed factor - {QualityAndSpeed.SpeedFactor}");
+            Console.WriteLine($"Service: clothing - {Clothing.Title}, quality list - {QualityAndSpeed.DisplayList()}, speed factor - {QualityAndSpeed.SpeedFactor}, price: {Price}");
         }
     }
 }

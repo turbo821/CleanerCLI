@@ -14,25 +14,33 @@ namespace ConsoleApplication1
     {
         static async Task Main(string[] args)
         {
-            // creating objects
+            // <creating objects>
             Card card1 = new Card("38492182", 800);
             IClient client1 = new CommonClient("Evgeny", "Terekhov", "Igorevich", card1);
             IClient client2 = new VipClient("Bill", "Gates", null, new Card("82912384", 120000));
             IClient client3 = new LegalEntity("Google", new Card("67235114", 16000000));
+
             Clothing cap = new Headdress("Cap", 1, 2, 300);
             Clothing t_shirt = new Underwear("T-shirt", 3, 3, 440);
             Clothing winterCoat = new Outerwear("Winter coat", 5, 4, 660);
             Clothing hat = new Headdress("Hat", 2, 1, 400);
             Clothing trousers = new Outerwear("Trousers", 4, 3, 640);
             Clothing costume = new Outerwear("Costume", 5, 5, 1120);
+
             Branch moscow = new Branch("Moscow");
             Branch berlin = new Branch("Berlin");
             Branch london = new Branch("London");
-            Allowance allowance = new Allowance(3, 4);
-            Service<Underwear> service = new Service<Underwear>((Underwear)t_shirt, allowance);
-            //Order order = client2.MakeOrder(service, berlin);
 
-            // writing and reading to a json file for each object of a certain class
+            Allowance allowance = new Allowance(3, 4);
+
+            Service<Underwear> service = new Service<Underwear>((Underwear)t_shirt, allowance);
+
+            Order<Underwear, VipClient> order = new Order<Underwear, VipClient>((VipClient)client2, service, berlin);
+            //order.Washing();
+            // </creating objects>
+
+
+            // <writing and reading to a json file for each object of a certain class>
 
             // for Branch
             await JsonFileManager.Write<Branch>("json/branch.json", berlin);
@@ -62,13 +70,16 @@ namespace ConsoleApplication1
             Underwear clothingFile = await JsonFileManager.Read<Underwear>("json/clothing.json");
             clothingFile.DisplayInfo();
 
-            // for Service
-            await JsonFileManager.Write<Service<Underwear>>("json/service.json", service);
+            //// for Service
+            await JsonFileManager.Write("json/service.json", service);
             Service<Underwear> serviceFile = await JsonFileManager.Read<Service<Underwear>>("json/service.json");
             serviceFile.DisplayInfo();
 
-            // for Order
-
+            //// for Order
+            await JsonFileManager.Write("json/order.json", order);
+            Order<Underwear, VipClient> orderFile = await JsonFileManager.Read<Order<Underwear, VipClient>>("json/order.json");
+            orderFile.DisplayInfo();
+            // </writing and reading to a json file for each object of a certain class>
 
             Console.ReadKey();
         }
