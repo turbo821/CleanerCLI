@@ -91,6 +91,7 @@
     <Compile Include="QualityAndSpeed.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="Shoes.cs" />
+    <Compile Include="StaticMethods.cs" />
     <Compile Include="Underwear.cs" />
     <Compile Include="VipClient.cs" />
     <Compile Include="Clothing.cs" />

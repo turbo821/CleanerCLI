@@ -16,11 +16,11 @@ namespace ConsoleApplication1
         {
             if (Regular)
             {
-                Notify?.Invoke(this, new CustomEventArgs($"Common Client:\n{FirstName} {SecondName} {LastName} (regular client)"));
+                Notify?.Invoke(this, new CustomEventArgs($"Common Client: {FirstName} {SecondName} {LastName} (regular client)"));
             }
             else
             {
-                Notify?.Invoke(this, new CustomEventArgs($"Common Client:\n{FirstName} {SecondName} {LastName} (not regular client)"));
+                Notify?.Invoke(this, new CustomEventArgs($"Common Client: {FirstName} {SecondName} {LastName} (not regular client)"));
             }
         }
     }

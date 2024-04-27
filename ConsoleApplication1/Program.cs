@@ -16,7 +16,7 @@ namespace ConsoleApplication1
         {
             // <creating objects>
             Card card1 = new Card("38492182", 800);
-            Client client1 = new CommonClient("Evgeny", "Terekhov", "Igorevich", card1);
+            CommonClient client1 = new CommonClient("Evgeny", "Terekhov", "Igorevich", card1);
             IClient client2 = new VipClient("Bill", "Gates", null, new Card("82912384", 120000));
             IClient client3 = new LegalEntity("Google", new Card("67235114", 16000000));
 
@@ -37,27 +37,34 @@ namespace ConsoleApplication1
 
             Order<Underwear, VipClient> order = new Order<Underwear, VipClient>((VipClient)client2, service, berlin);
 
-            (client1 as CommonClient).Notify += (sender, e) => Console.WriteLine(e.Message);
+            // <client events>
+            client1.Notify += StaticMethods.DisplayToConsole;
+            client1.Notify += StaticMethods.DisplayRedToConsole;
+            client1.Notify += StaticMethods.LogToFile;
             client1.DisplayInfo();
+            Console.WriteLine();
 
-            (client3 as LegalEntity).Notify += (sender, e) => Console.WriteLine(e.Message);
-            client3.DisplayInfo();
-
+            // <clothing events>
             costume.Notify += (sender, e) => Console.WriteLine(e.Message);
+            costume.Notify += StaticMethods.DisplayRedToConsole;
+            costume.Notify += StaticMethods.LogToFile;
             costume.DisplayInfo();
+            Console.WriteLine();
 
-            moscow.Notify += (sender, e) => Console.WriteLine(e.Message);
-            moscow.DisplayInfo();
-            
-            allowance.Notify += (sender, e) => Console.WriteLine(e.Message);
-            allowance.DisplayInfo();
-
+            // <service events>
             service.Notify += (sender, e) => Console.WriteLine(e.Message);
+            service.Notify += StaticMethods.DisplayRedToConsole;
+            service.Notify += StaticMethods.LogToFile;
+            service.Notify -= StaticMethods.DisplayRedToConsole;
             service.DisplayInfo();
+            Console.WriteLine();
 
-            order.Notify += (sender, e) => Console.WriteLine(e.Message);
+            // <order events>
+            order.Notify += StaticMethods.DisplayToConsole;
+            order.Notify += StaticMethods.LogToFile;
             order.Washing();
             order.DisplayInfo();
+            Console.WriteLine("The End");
 
             Console.ReadKey();
         }
