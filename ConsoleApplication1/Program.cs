@@ -37,31 +37,34 @@ namespace ConsoleApplication1
 
             Order<Underwear, VipClient> order = new Order<Underwear, VipClient>((VipClient)client2, service, berlin);
 
+            // <list of objects that implement the interface INotify>
+            List<INotify> listToAddNotify = new List<INotify>() { client1, costume, service, order };
+
+            // <add an event handler DisplayRedToConsole to items>
+            foreach (INotify item in listToAddNotify)
+            {
+                item.Notify += StaticMethods.DisplayRedToConsole;
+                item.Notify += StaticMethods.LogToFile;
+            }
             // <client events>
             client1.Notify += StaticMethods.DisplayToConsole;
-            client1.Notify += StaticMethods.DisplayRedToConsole;
-            client1.Notify += StaticMethods.LogToFile;
             client1.DisplayInfo();
             Console.WriteLine();
 
             // <clothing events>
             costume.Notify += (sender, e) => Console.WriteLine(e.Message);
-            costume.Notify += StaticMethods.DisplayRedToConsole;
-            costume.Notify += StaticMethods.LogToFile;
             costume.DisplayInfo();
             Console.WriteLine();
 
             // <service events>
             service.Notify += (sender, e) => Console.WriteLine(e.Message);
-            service.Notify += StaticMethods.DisplayRedToConsole;
-            service.Notify += StaticMethods.LogToFile;
             service.Notify -= StaticMethods.DisplayRedToConsole;
             service.DisplayInfo();
             Console.WriteLine();
 
             // <order events>
             order.Notify += StaticMethods.DisplayToConsole;
-            order.Notify += StaticMethods.LogToFile;
+            order.Notify -= StaticMethods.DisplayRedToConsole;
             order.Washing();
             order.DisplayInfo();
             Console.WriteLine("The End");
