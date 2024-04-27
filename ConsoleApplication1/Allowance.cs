@@ -7,8 +7,9 @@ using System.Text;
 
 namespace ConsoleApplication1
 {
-    public class Allowance : IDisplayable, IHaveQSList
+    public class Allowance : IDisplayable, IHaveQSList, INotify
     {
+        public event MessageHandler Notify;
         private int quality;
         private int speed;
 
@@ -107,15 +108,15 @@ namespace ConsoleApplication1
 
         public void DisplayInfo()
         {
-            Console.WriteLine($"Allowance: {Title}, default price will increase {PriceFactor} times");
+            Notify?.Invoke(this, new CustomEventArgs($"Allowance: {Title}, default price will increase {PriceFactor} times"));
         }
-        public static void DescriptionQuality()
+        public void DescriptionQuality()
         {
-            Console.WriteLine("Quality:\n\t5 -> great(A)\n\t4 -> good(B)\n\t3 -> normal(C)\n\t2 -> satisfactorily(D)\n\t1 -> economy(E)");
+            Notify?.Invoke(this, new CustomEventArgs("Quality:\n\t5 -> great(A)\n\t4 -> good(B)\n\t3 -> normal(C)\n\t2 -> satisfactorily(D)\n\t1 -> economy(E)"));
         }
-        public static void DescriptionSpeed()
+        public void DescriptionSpeed()
         {
-            Console.WriteLine("Speed:\n\t5 -> very fast\n\t4 -> fast\n\t3 -> normal\n\t2 -> slowly\n\t1 -> very slowly");
+            Notify?.Invoke(this, new CustomEventArgs("Speed:\n\t5 -> very fast\n\t4 -> fast\n\t3 -> normal\n\t2 -> slowly\n\t1 -> very slowly"));
         }
     }
 }

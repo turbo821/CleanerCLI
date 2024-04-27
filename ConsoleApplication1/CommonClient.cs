@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
-    public class CommonClient : Client 
+    public class CommonClient : Client, INotify 
     {
+        public event MessageHandler Notify;
         public CommonClient(string firstName, string lastName, string secondName, Card card) : 
             base(firstName, lastName, secondName, card)
         { }
@@ -15,11 +16,11 @@ namespace ConsoleApplication1
         {
             if (Regular)
             {
-                Console.WriteLine($"Common Client:\n{FirstName} {SecondName} {LastName} (regular client)");
+                Notify?.Invoke(this, new CustomEventArgs($"Common Client:\n{FirstName} {SecondName} {LastName} (regular client)"));
             }
             else
             {
-                Console.WriteLine($"Common Client:\n{FirstName} {SecondName} {LastName} (not regular client)");
+                Notify?.Invoke(this, new CustomEventArgs($"Common Client:\n{FirstName} {SecondName} {LastName} (not regular client)"));
             }
         }
     }

@@ -12,11 +12,11 @@ namespace ConsoleApplication1
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             // <creating objects>
             Card card1 = new Card("38492182", 800);
-            IClient client1 = new CommonClient("Evgeny", "Terekhov", "Igorevich", card1);
+            Client client1 = new CommonClient("Evgeny", "Terekhov", "Igorevich", card1);
             IClient client2 = new VipClient("Bill", "Gates", null, new Card("82912384", 120000));
             IClient client3 = new LegalEntity("Google", new Card("67235114", 16000000));
 
@@ -36,50 +36,28 @@ namespace ConsoleApplication1
             Service<Underwear> service = new Service<Underwear>((Underwear)t_shirt, allowance);
 
             Order<Underwear, VipClient> order = new Order<Underwear, VipClient>((VipClient)client2, service, berlin);
-            //order.Washing();
-            // </creating objects>
 
+            (client1 as CommonClient).Notify += (sender, e) => Console.WriteLine(e.Message);
+            client1.DisplayInfo();
 
-            // <writing and reading to a json file for each object of a certain class>
+            (client3 as LegalEntity).Notify += (sender, e) => Console.WriteLine(e.Message);
+            client3.DisplayInfo();
 
-            // for Branch
-            await JsonFileManager.Write<Branch>("json/branch.json", berlin);
-            Branch branchFile = await JsonFileManager.Read<Branch>("json/branch.json");
-            branchFile.DisplayInfo();
-            // for Allowance
-            await JsonFileManager.Write<Allowance>("json/allowance.json", allowance);
-            Allowance allowanceFile = await JsonFileManager.Read<Allowance>("json/allowance.json");
-            allowanceFile.DisplayInfo();
-            // for Card
-            await JsonFileManager.Write<Card>("json/card.json", card1);
-            Card cardFile = await JsonFileManager.Read<Card>("json/card.json");
-            Console.WriteLine(cardFile.Number);
+            costume.Notify += (sender, e) => Console.WriteLine(e.Message);
+            costume.DisplayInfo();
 
-            // for Client
-            await JsonFileManager.Write<VipClient>("json/client.json", (VipClient)client2);
-            VipClient clientFile = await JsonFileManager.Read<VipClient>("json/client.json");
-            clientFile.DisplayInfo();
+            moscow.Notify += (sender, e) => Console.WriteLine(e.Message);
+            moscow.DisplayInfo();
+            
+            allowance.Notify += (sender, e) => Console.WriteLine(e.Message);
+            allowance.DisplayInfo();
 
-            // for LegalEntity
-            await JsonFileManager.Write<LegalEntity>("json/legalEntity.json", (LegalEntity)client3);
-            LegalEntity legalEntityFile = await JsonFileManager.Read<LegalEntity>("json/legalEntity.json");
-            legalEntityFile.DisplayInfo();
+            service.Notify += (sender, e) => Console.WriteLine(e.Message);
+            service.DisplayInfo();
 
-            // for Clothing
-            await JsonFileManager.Write<Clothing>("json/clothing.json", t_shirt);
-            Underwear clothingFile = await JsonFileManager.Read<Underwear>("json/clothing.json");
-            clothingFile.DisplayInfo();
-
-            //// for Service
-            await JsonFileManager.Write("json/service.json", service);
-            Service<Underwear> serviceFile = await JsonFileManager.Read<Service<Underwear>>("json/service.json");
-            serviceFile.DisplayInfo();
-
-            //// for Order
-            await JsonFileManager.Write("json/order.json", order);
-            Order<Underwear, VipClient> orderFile = await JsonFileManager.Read<Order<Underwear, VipClient>>("json/order.json");
-            orderFile.DisplayInfo();
-            // </writing and reading to a json file for each object of a certain class>
+            order.Notify += (sender, e) => Console.WriteLine(e.Message);
+            order.Washing();
+            order.DisplayInfo();
 
             Console.ReadKey();
         }

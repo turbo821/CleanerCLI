@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
-    public class LegalEntity : IClient
+    public class LegalEntity : IClient, INotify
     {
+        public event MessageHandler Notify;
         private int hitСounter = 0;
 
         public LegalEntity(string company, Card card )
@@ -23,11 +24,11 @@ namespace ConsoleApplication1
         {
             if( Regular )
             {
-                Console.WriteLine($"Legal Entity: company {Company} (regular company)");
+                Notify?.Invoke(this, new CustomEventArgs($"Legal Entity:\nCompany {Company} (regular company)"));
             }
             else
             {
-                Console.WriteLine($"Legal Entity: company {Company} (not regular company)");
+                Notify?.Invoke(this, new CustomEventArgs($"Legal Entity:\nCompany {Company} (not regular company)"));
             }
             
         }
@@ -37,13 +38,9 @@ namespace ConsoleApplication1
             hitСounter++;
             if (hitСounter >= 3)
             {
+                Notify?.Invoke(this, new CustomEventArgs($"{Company} is now a regular company"));
                 Regular = true;
             }
         }
-
-        //public Order<TypeClothing> MakeOrder<TypeClothing>(Service<TypeClothing> service, Branch branch) where TypeClothing : Clothing
-        //{
-        //    return new Order<TypeClothing>(this, service, branch);
-        //}
     }
 }

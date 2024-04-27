@@ -7,10 +7,11 @@ using System.Threading;
 
 namespace ConsoleApplication1
 {
-    public class Order<TypeClothing, TypeClient> : IDisplayable, IHaveQSList
+    public class Order<TypeClothing, TypeClient> : IDisplayable, IHaveQSList, INotify
         where TypeClothing : Clothing
         where TypeClient : IClient
     {
+        public event MessageHandler Notify;
         private double discountOfDay = 0.02;
         private double discountOfRegular = 0.05;
         public Order(TypeClient client, Service<TypeClothing> service, Branch branch)
@@ -55,7 +56,7 @@ namespace ConsoleApplication1
                 bool paymentCompleted = Client.Card.Take(FinalPrice);
                 if (paymentCompleted)
                 {
-                    Console.WriteLine("Washing in progress...");
+                    Notify?.Invoke(this, new CustomEventArgs("Washing in progress..."));
 
                     List<int> extendQualityList = QualityAndSpeed.MakeExtendQualityList();
 
@@ -67,32 +68,32 @@ namespace ConsoleApplication1
 
                     Client.IncreaseCounter();
                     ReturnDate = DateTime.Now;
-                    Console.WriteLine("Washing done!");
+                    Notify?.Invoke(this, new CustomEventArgs("Washing done!"));
                 }
                 else
                 {
-                    Console.WriteLine($"There is not enough money on the card, top up your account with {FinalPrice - Client.Card.Sum} rubles");
+                    Notify?.Invoke(this, new CustomEventArgs($"There is not enough money on the card, top up your account with {FinalPrice - Client.Card.Sum} rubles"));
                 }
             }
             else
             {
-                Console.WriteLine("Order completed");
+                Notify?.Invoke(this, new CustomEventArgs("Order completed"));
             }
         }
 
         public void DisplayInfo()
         {
-            Console.WriteLine($"Order: final price: {FinalPrice}, wash time: {ResultTime}, final quality list: {QualityAndSpeed.DisplayList()}");
+            Notify?.Invoke(this, new CustomEventArgs($"Order: final price: {FinalPrice}, wash time: {ResultTime}, final quality list: {QualityAndSpeed.DisplayList()}"));
         }
 
         public void GetResult()
         {
             if (ReceiptDate != null)
             {
-                Console.WriteLine($"The resulting wash quality: {QualityResult}\nLead time wash: {ResultTime}s");
-                Console.WriteLine($"-{FinalPrice} rubles from the card, {Client.Card.Sum}rub remained");
+                Notify?.Invoke(this, new CustomEventArgs($"The resulting wash quality: {QualityResult}\nLead time wash: {ResultTime}s"));
+                Notify?.Invoke(this, new CustomEventArgs($"-{FinalPrice} rubles from the card, {Client.Card.Sum}rub remained"));
             }
-            else { Console.WriteLine($"Washing not completed"); }
+            else { Notify?.Invoke(this, new CustomEventArgs($"Washing not completed")); }
         }
     }
 }

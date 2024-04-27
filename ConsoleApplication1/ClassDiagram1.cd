@@ -10,16 +10,26 @@
   <Class Name="ConsoleApplication1.Client">
     <Position X="3.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>CABAAEgAAAAIEAAAAAAAAAAAEAAAAAAAAAAAAAAAAAg=</HashCode>
       <FileName>Client.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="ConsoleApplication1.Service">
-    <Position X="5.5" Y="0.5" Width="1.5" />
+  <Class Name="ConsoleApplication1.Service&lt;TypeClothing&gt;" Collapsed="true">
+    <Position X="8.5" Y="1" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAQAAAAAAQAAEAAFQAAAAEAAAAAABAAAAAAAAAAEAAA=</HashCode>
       <FileName>Service.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ConsoleApplication1.Allowance">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEQEAAEEBFAAAAAABBAAIABQBAAAAAAAAAAAA=</HashCode>
+      <FileName>Allowance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

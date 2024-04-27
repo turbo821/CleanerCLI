@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
-    public abstract class Clothing : IDisplayable, IHaveQSList
+    public abstract class Clothing : IDisplayable, IHaveQSList, INotify
     {
+        public event MessageHandler Notify;
         private int size;
         private int pollutionLevel;
         public virtual DayOfWeek DiscountDay { get; set; }
@@ -77,7 +78,7 @@ namespace ConsoleApplication1
         }
         public void DisplayInfo()
         {
-            Console.WriteLine($"Clothing: {Title}, size - {Size}, pollution - {PollutionLevel}, default price washing - {DefaultPrice} rub");
+            Notify?.Invoke(this, new CustomEventArgs($"Clothing: {Title}, size - {Size}, pollution - {PollutionLevel}, default price washing - {DefaultPrice} rub"));
         }
     }
 }

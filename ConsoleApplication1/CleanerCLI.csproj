@@ -77,10 +77,12 @@
     <Compile Include="Card.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="CommonClient.cs" />
+    <Compile Include="CustomEventArgsAndMessageHandler.cs" />
     <Compile Include="Headdress.cs" />
     <Compile Include="IClient.cs" />
     <Compile Include="IDisplayable.cs" />
     <Compile Include="IHaveQSList.cs" />
+    <Compile Include="INotify.cs" />
     <Compile Include="LegalEntity.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Outerwear.cs" />
@@ -96,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

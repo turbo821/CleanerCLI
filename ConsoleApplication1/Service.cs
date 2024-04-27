@@ -5,9 +5,10 @@ using System.Text;
 
 namespace ConsoleApplication1
 {
-    public class Service<TypeClothing> : IDisplayable, IHaveQSList
+    public class Service<TypeClothing> : IDisplayable, IHaveQSList, INotify
         where TypeClothing : Clothing
     {
+        public event MessageHandler Notify;
         private TypeClothing clothing;
         private Allowance allowance;
         public Service(TypeClothing clothing, Allowance allowance) 
@@ -43,7 +44,7 @@ namespace ConsoleApplication1
         }
         public  void DisplayInfo()
         {
-            Console.WriteLine($"Service: clothing - {Clothing.Title}, quality list - {QualityAndSpeed.DisplayList()}, speed factor - {QualityAndSpeed.SpeedFactor}, price: {Price}");
+            Notify?.Invoke(this, new CustomEventArgs($"Service: clothing - {Clothing.Title}, quality list - {QualityAndSpeed.DisplayList()}, speed factor - {QualityAndSpeed.SpeedFactor}, price: {Price}"));
         }
     }
 }

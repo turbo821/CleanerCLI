@@ -6,7 +6,8 @@ using System.Text;
 
 namespace ConsoleApplication1
 {
-    public abstract class Client : IClient
+
+    public abstract class Client : IClient 
     {
         private int hitСounter = 0;
 
@@ -33,12 +34,5 @@ namespace ConsoleApplication1
             }
         }
         public abstract void DisplayInfo();
-
-        //public Order<TypeClothing, TypeClient> MakeOrder<TypeClothing, TypeClient>(Service<TypeClothing> service, Branch branch) 
-        //    where TypeClothing : Clothing
-        //    where TypeClient : IClient
-        //{
-        //    return new Order<TypeClothing, TypeClient>((TypeClient)(this), service, branch);
-        //}
     }
 }
